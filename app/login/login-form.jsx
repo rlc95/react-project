@@ -4,14 +4,42 @@ import { useState } from 'react';
 
 
 export default function LoginForm(prop){
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError]= useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const {title} = prop; //destructure 
 
+  const validatForm = (e) =>{
+
+    if (!email) {
+      setEmailError("Email is required");
+      return false;
+    }else{
+      setEmailError("");
+    }
+
+    if (!password) {
+      setPasswordError("Password is required");
+      return false;
+    }else{
+      setPasswordError("");
+    }
+
+    return true;
+
+  }
+
   const submitData = (e) => {
     e.preventDefault();
-    console.log("Data",email," ",password);
+
+    const Isvalid = validatForm();
+
+    if (Isvalid) {
+      console.log("Data",email," ",password);
+    }
+    
     
   }
 
@@ -37,6 +65,9 @@ export default function LoginForm(prop){
             onChange={(e) => setEmail(e.target.value) }
             id="email"
             className="bg-gray-58 border border-gray-300 rounded-lg text-gray-900 focus:ring-1 focus:ring-offset-2 focus:ring-blue-300 focus:border-blue-500 w-full p-2.5" placeholder="yourname@gmail.com" />
+          
+            {emailError && <div className='text-red-600 text-xs mt-2 ml-1'>{emailError}</div>}
+          
           </div>
 
           <div>
@@ -53,6 +84,8 @@ export default function LoginForm(prop){
             value={password}
             onChange={(e)=>setPassword(e.target.value)}
             className="bg-gray-50 border border-gray-300 rounded-lg text-gray-900 focus:ring-1 focus:ring-offset-2 focus:ring-blue-300 focus:border-blue-500 w-full p-2.5" placeholder="••••••••" />
+          
+          {passwordError && <div className='text-red-600 text-xs mt-2 ml-1'>{passwordError}</div>}
           </div>
 
 
