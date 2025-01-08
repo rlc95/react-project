@@ -1,5 +1,6 @@
 "use client";
 
+import { loginUser } from '@/lib/apis/server';
 import { useState } from 'react';
 
 
@@ -31,13 +32,15 @@ export default function LoginForm(prop){
 
   }
 
-  const submitData = (e) => {
+  const submitData = async (e) => {
     e.preventDefault();
 
     const Isvalid = validatForm();
 
     if (Isvalid) {
       console.log("Data",email," ",password);
+      const login = await loginUser({email:email, password:password})
+      console.log("login",login);
     }
     
     
