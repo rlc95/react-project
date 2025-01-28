@@ -8,6 +8,8 @@ import { registrUser } from "@/lib/apis/server";
 import Link from "next/link";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/hooks/use-toast";
 
 const Default_Error = {
     error:false,
@@ -18,6 +20,7 @@ export default function Registerform() {
 
     const [error,setError] = useState(Default_Error);
     const [isloading, setLoading] = useState(false);
+    const { toast } = useToast();
 
     const registrsubmt = async (event) => {
         event.preventDefault();
@@ -40,6 +43,13 @@ export default function Registerform() {
                 
                 if (respnseReg.error) {
                     setError({error: true, message:respnseReg.error});
+                }else{
+                    toast({
+                        variant: "success",
+                        title: "User Registration Successfuly Completed.",
+                        description: "Please Continue With Login",
+                        action: <ToastAction altText="Login" className="hover:bg-green-700">Login</ToastAction>,
+                      })
                 }
 
 
